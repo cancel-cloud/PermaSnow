@@ -65,7 +65,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.0")
 
-    modApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}") {
+    modApi("dev.isxander.yacl3:yet-another-config-lib:${property("deps.yacl")}") {
         // was including old fapi version that broke things at runtime
         exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
     }
