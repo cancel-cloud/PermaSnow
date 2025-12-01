@@ -14,7 +14,13 @@ public abstract class MixinBiome {
 
     @Shadow public abstract boolean hasPrecipitation();
 
-    public abstract boolean coldEnoughToSnow(BlockPos blockPos);
+    //? if <1.21.2
+    /*@Shadow public abstract boolean coldEnoughToSnow(BlockPos blockPos);
+    *///?}
+
+    //? if >=1.21.2
+    @Shadow public abstract float getTemperature(BlockPos blockPos);
+    //?}
 
     @Inject(at = @At("HEAD"), method = "getPrecipitationAt", cancellable = true)
     public void getPrecipitationAt(BlockPos blockPos, CallbackInfoReturnable<Biome.Precipitation> cir) {
@@ -24,7 +30,12 @@ public abstract class MixinBiome {
             if (PermaSnow.Companion.getConfig().getAlwaysSnow().get()) {
                 cir.setReturnValue(Biome.Precipitation.SNOW);
             } else {
-                cir.setReturnValue(coldEnoughToSnow(blockPos) ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN);
+                //? if <1.21.2
+                /*cir.setReturnValue(coldEnoughToSnow(blockPos) ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN);
+                *///?} else {
+                // In 1.21.2+, coldEnoughToSnow was removed. Check temperature directly.
+                cir.setReturnValue(getTemperature(blockPos) < 0.15F ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN);
+                //?}
             }
         }
     }
