@@ -41,6 +41,8 @@ stonecutter {
 
 repositories {
     maven("https://nexus.flawcra.cc/repository/maven-mirrors/")
+    maven("https://maven.isxander.dev/releases")
+    maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
